@@ -1,0 +1,3027 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Math Facts Lab">
+
+<link rel="manifest" href="manifest.json">
+
+<title>Math Facts Lab</title>
+
+<style>
+
+:root {
+  --bg:#f4f7fb;
+  --panel:#ffffff;
+  --panel2:#eef3f9;
+  --text:#172033;
+  --muted:#667085;
+  --border:#d9e0ea;
+  --primary:#2563eb;
+  --primary-dark:#1d4ed8;
+  --success:#16a34a;
+  --danger:#dc2626;
+  --shadow:0 10px 30px rgba(15,23,42,.08);
+}
+
+* {
+  box-sizing:border-box;
+}
+
+html {
+  scroll-behavior:smooth;
+}
+
+body {
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+button,
+input,
+select {
+  font:inherit;
+}
+
+button {
+  cursor:pointer;
+}
+
+button:active {
+  transform:scale(.98);
+}
+
+/* TOP BAR */
+
+.topbar {
+  height:72px;
+  background:var(--panel);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo {
+  width:43px;
+  height:43px;
+  border-radius:12px;
+  background:var(--primary);
+  color:white;
+  display:grid;
+  place-items:center;
+  font-size:25px;
+  font-weight:bold;
+}
+
+.brand strong {
+  display:block;
+  font-size:17px;
+}
+
+.brand small {
+  color:var(--muted);
+}
+
+.top-actions {
+  display:flex;
+  gap:6px;
+}
+
+.top-actions button {
+  border:0;
+  background:transparent;
+  color:var(--text);
+  padding:10px 14px;
+  border-radius:9px;
+}
+
+.top-actions button:hover {
+  background:var(--panel2);
+}
+
+/* MAIN */
+
+main {
+  max-width:1150px;
+  margin:auto;
+  padding:35px 20px 60px;
+}
+
+.page {
+  display:none;
+}
+
+.page.active {
+  display:block;
+}
+
+/* HERO */
+
+.hero {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:42px;
+  display:grid;
+  grid-template-columns:1.5fr 1fr;
+  gap:35px;
+  box-shadow:var(--shadow);
+}
+
+.badge {
+  font-size:12px;
+  font-weight:bold;
+  letter-spacing:1px;
+  color:var(--primary);
+}
+
+.hero h1 {
+  font-size:clamp(35px,6vw,60px);
+  line-height:1;
+  margin:14px 0;
+}
+
+.hero p {
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.6;
+  max-width:650px;
+}
+
+.hero-card {
+  background:var(--panel2);
+  border-radius:18px;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.hero-number {
+  font-size:75px;
+}
+
+/* BUTTONS */
+
+.primary,
+.secondary,
+.danger {
+  border:0;
+  border-radius:10px;
+  padding:13px 20px;
+  font-weight:bold;
+}
+
+.primary {
+  background:var(--primary);
+  color:white;
+}
+
+.primary:hover {
+  background:var(--primary-dark);
+}
+
+.secondary {
+  background:var(--panel2);
+  color:var(--text);
+}
+
+.danger {
+  background:#fee2e2;
+  color:var(--danger);
+}
+
+.big {
+  padding:16px 25px;
+  font-size:17px;
+}
+
+/* ACTIVITY */
+
+.section-title {
+  margin:45px 0 20px;
+}
+
+.section-title h2 {
+  margin-bottom:5px;
+}
+
+.section-title p {
+  color:var(--muted);
+}
+
+.activity-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.activity-card {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:25px 15px;
+  text-align:left;
+  color:var(--text);
+  box-shadow:var(--shadow);
+}
+
+.activity-card:hover {
+  border-color:var(--primary);
+  transform:translateY(-2px);
+}
+
+.activity-icon {
+  display:block;
+  font-size:35px;
+  margin-bottom:15px;
+}
+
+.activity-card strong,
+.activity-card small {
+  display:block;
+}
+
+.activity-card small {
+  color:var(--muted);
+  margin-top:7px;
+}
+
+.quick-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+  margin-top:15px;
+}
+
+.quick-card {
+  border:1px solid var(--border);
+  background:var(--panel);
+  border-radius:15px;
+  padding:20px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  text-align:left;
+  color:var(--text);
+}
+
+.quick-card span {
+  font-size:30px;
+}
+
+.quick-card small {
+  display:block;
+  color:var(--muted);
+  margin-top:5px;
+}
+
+/* HEADINGS */
+
+.page-heading {
+  margin-bottom:25px;
+}
+
+.page-heading h1 {
+  margin:8px 0;
+  font-size:36px;
+}
+
+.page-heading p {
+  color:var(--muted);
+}
+
+.back {
+  border:0;
+  background:transparent;
+  color:var(--text);
+  padding:10px 14px;
+  border-radius:9px;
+}
+
+.back:hover {
+  background:var(--panel2);
+}
+
+/* SETUP */
+
+.setup-card,
+.settings-card,
+.about-card,
+.mastery-card,
+.learn-card,
+.results-card {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:28px;
+  box-shadow:var(--shadow);
+}
+
+.setup-card label {
+  display:block;
+  font-weight:bold;
+  margin:25px 0 10px;
+}
+
+.operation-buttons,
+.mode-buttons {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.operation,
+.mode,
+.level {
+  border:1px solid var(--border);
+  background:var(--panel);
+  color:var(--text);
+  padding:15px;
+  border-radius:10px;
+}
+
+.operation.selected,
+.mode.selected,
+.level.selected {
+  background:#dbeafe;
+  border-color:var(--primary);
+  color:var(--primary);
+}
+
+.levels {
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+}
+
+.level strong,
+.level small {
+  display:block;
+}
+
+.level small {
+  margin-top:5px;
+  color:var(--muted);
+}
+
+.start-button {
+  width:100%;
+  margin-top:30px;
+  font-size:17px;
+}
+
+/* GAME */
+
+.game-top {
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:15px;
+}
+
+.game-stat {
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:10px 17px;
+  border-radius:10px;
+  min-width:100px;
+  text-align:center;
+}
+
+.game-stat small,
+.game-stat strong {
+  display:block;
+}
+
+.game-stat small {
+  color:var(--muted);
+  font-size:11px;
+}
+
+.hidden {
+  display:none!important;
+}
+
+.progress-bar {
+  height:9px;
+  background:var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:25px;
+}
+
+.progress-bar div {
+  height:100%;
+  width:0;
+  background:var(--primary);
+  transition:width:.3s;
+}
+
+.problem-card {
+  max-width:700px;
+  margin:40px auto;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:25px;
+  padding:45px 25px;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+
+.problem-label {
+  color:var(--primary);
+  font-weight:bold;
+  letter-spacing:2px;
+}
+
+.problem {
+  font-size:clamp(45px,10vw,85px);
+  font-weight:bold;
+  margin:35px 0;
+}
+
+#answer {
+  width:220px;
+  max-width:90%;
+  border:2px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  text-align:center;
+  font-size:28px;
+  outline:none;
+  background:var(--panel);
+  color:var(--text);
+}
+
+#answer:focus {
+  border-color:var(--primary);
+}
+
+.answer-button {
+  display:block;
+  margin:15px auto 0;
+}
+
+#feedback {
+  min-height:30px;
+  margin-top:18px;
+  font-weight:bold;
+}
+
+.correct {
+  color:var(--success);
+}
+
+.wrong {
+  color:var(--danger);
+}
+
+.hint-box {
+  max-width:700px;
+  margin:auto;
+  padding:16px;
+  border-radius:12px;
+  background:var(--panel2);
+}
+
+.hint-box strong {
+  margin-right:8px;
+}
+
+/* RESULTS */
+
+.results-card {
+  max-width:800px;
+  margin:40px auto;
+  text-align:center;
+}
+
+.results-icon {
+  font-size:65px;
+}
+
+.result-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin:30px 0;
+}
+
+.result-grid div,
+.progress-card {
+  background:var(--panel2);
+  border-radius:13px;
+  padding:20px;
+}
+
+.result-grid strong,
+.result-grid small {
+  display:block;
+}
+
+.result-grid strong {
+  font-size:30px;
+}
+
+.result-grid small {
+  color:var(--muted);
+  margin-top:5px;
+}
+
+.results-actions {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+/* LEARN */
+
+.learn-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.learn-card h2 {
+  margin-top:0;
+}
+
+.learn-card p {
+  color:var(--muted);
+  line-height:1.5;
+}
+
+.ten-frame {
+  display:grid;
+  grid-template-columns:repeat(5,45px);
+  gap:8px;
+  justify-content:center;
+  margin:25px 0;
+}
+
+.ten-cell {
+  width:45px;
+  height:45px;
+  border:2px solid var(--border);
+  border-radius:8px;
+}
+
+.ten-cell.filled {
+  background:var(--primary);
+}
+
+.learn-controls {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:25px;
+}
+
+.learn-controls button {
+  width:45px;
+  height:45px;
+  border:0;
+  border-radius:10px;
+  background:var(--panel2);
+  color:var(--text);
+  font-size:22px;
+}
+
+.beads {
+  min-height:70px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:7px;
+  margin:20px;
+}
+
+.bead {
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  background:var(--primary);
+}
+
+.example-equation {
+  background:var(--panel2);
+  border-radius:12px;
+  padding:25px;
+  text-align:center;
+  font-size:30px;
+}
+
+/* PROGRESS */
+
+.progress-overview {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.progress-card {
+  text-align:center;
+}
+
+.progress-card span {
+  display:block;
+  font-size:30px;
+}
+
+.progress-card strong {
+  display:block;
+  font-size:32px;
+  margin:8px 0;
+}
+
+.progress-card small {
+  color:var(--muted);
+}
+
+.mastery-row {
+  display:grid;
+  grid-template-columns:160px 1fr 60px;
+  gap:12px;
+  align-items:center;
+  margin:22px 0;
+}
+
+.mastery-track {
+  height:13px;
+  background:var(--border);
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.mastery-track div {
+  width:0;
+  height:100%;
+  background:var(--primary);
+  transition:width:.5s;
+}
+
+/* SETTINGS */
+
+.setting {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:20px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.setting:last-child {
+  border-bottom:0;
+}
+
+.setting strong,
+.setting small {
+  display:block;
+}
+
+.setting small {
+  color:var(--muted);
+  margin-top:5px;
+}
+
+.toggle {
+  border:0;
+  padding:9px 17px;
+  border-radius:20px;
+  background:var(--panel2);
+  color:var(--text);
+}
+
+.toggle.on {
+  background:#dcfce7;
+  color:var(--success);
+}
+
+select {
+  padding:9px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--panel);
+  color:var(--text);
+}
+
+/* FOOTER */
+
+footer {
+  border-top:1px solid var(--border);
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  max-width:1150px;
+  margin:auto;
+}
+
+/* DARK MODE */
+
+body.dark {
+  --bg:#0b1120;
+  --panel:#111827;
+  --panel2:#1f2937;
+  --text:#f8fafc;
+  --muted:#94a3b8;
+  --border:#334155;
+}
+
+/* MOBILE */
+
+@media(max-width:800px) {
+
+  .hero {
+    grid-template-columns:1fr;
+    padding:28px;
+  }
+
+  .activity-grid {
+    grid-template-columns:1fr 1fr;
+  }
+
+  .operation-buttons {
+    grid-template-columns:1fr 1fr;
+  }
+
+  .levels {
+    grid-template-columns:1fr 1fr;
+  }
+
+  .learn-grid {
+    grid-template-columns:1fr;
+  }
+
+  .progress-overview {
+    grid-template-columns:1fr 1fr;
+  }
+
+  .result-grid {
+    grid-template-columns:1fr 1fr;
+  }
+
+  .mastery-row {
+    grid-template-columns:120px 1fr 45px;
+    font-size:13px;
+  }
+}
+
+@media(max-width:550px) {
+
+  .topbar {
+    padding:0 12px;
+  }
+
+  .brand small {
+    display:none;
+  }
+
+  .top-actions button:not(:last-child) {
+    display:none;
+  }
+
+  main {
+    padding:20px 12px 45px;
+  }
+
+  .activity-grid,
+  .quick-grid {
+    grid-template-columns:1fr;
+  }
+
+  .operation-buttons,
+  .mode-buttons {
+    grid-template-columns:1fr 1fr;
+  }
+
+  .game-top {
+    flex-wrap:wrap;
+  }
+
+  .game-stat {
+    min-width:75px;
+  }
+
+  footer {
+    padding:15px;
+  }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="app">
+
+<header class="topbar">
+
+  <div class="brand">
+
+```
+<div class="logo">∑</div>
+
+<div>
+  <strong>Math Facts Lab</strong>
+  <small>Practice • Learn • Master</small>
+</div>
+```
+
+  </div>
+
+  <div class="top-actions">
+
+```
+<button onclick="showPage('home')">
+  Home
+</button>
+
+<button onclick="showPage('progress')">
+  Progress
+</button>
+
+<button onclick="showPage('settings')">
+  ⚙️
+</button>
+```
+
+  </div>
+
+</header>
+
+<main>
+
+<!-- HOME -->
+
+<section id="home" class="page active">
+
+  <div class="hero">
+
+```
+<div>
+
+  <span class="badge">
+    MATH FACT PRACTICE
+  </span>
+
+  <h1>
+    Master your math facts.
+  </h1>
+
+  <p>
+    Practice addition, subtraction,
+    multiplication and division while
+    building accuracy and speed.
+  </p>
+
+  <button
+    class="primary big"
+    onclick="showPage('practice')">
+    ▶ Start Practice
+  </button>
+
+</div>
+
+<div class="hero-card">
+
+  <div class="hero-number">
+    ★
+  </div>
+
+  <h3>
+    Keep learning!
+  </h3>
+
+  <p>
+    Your progress is saved automatically.
+  </p>
+
+</div>
+```
+
+  </div>
+
+  <div class="section-title">
+
+```
+<h2>
+  Choose an activity
+</h2>
+
+<p>
+  Pick what you want to practice.
+</p>
+```
+
+  </div>
+
+  <div class="activity-grid">
+
+```
+<button
+  class="activity-card"
+  onclick="startPractice('addition')">
+
+  <span class="activity-icon">＋</span>
+
+  <strong>Addition</strong>
+
+  <small>
+    Build addition fluency
+  </small>
+
+</button>
+
+
+<button
+  class="activity-card"
+  onclick="startPractice('subtraction')">
+
+  <span class="activity-icon">−</span>
+
+  <strong>Subtraction</strong>
+
+  <small>
+    Practice subtraction facts
+  </small>
+
+</button>
+
+
+<button
+  class="activity-card"
+  onclick="startPractice('multiplication')">
+
+  <span class="activity-icon">×</span>
+
+  <strong>Multiplication</strong>
+
+  <small>
+    Master multiplication facts
+  </small>
+
+</button>
+
+
+<button
+  class="activity-card"
+  onclick="startPractice('division')">
+
+  <span class="activity-icon">÷</span>
+
+  <strong>Division</strong>
+
+  <small>
+    Build division fluency
+  </small>
+
+</button>
+```
+
+  </div>
+
+  <div class="quick-grid">
+
+```
+<button
+  class="quick-card"
+  onclick="showPage('learn')">
+
+  <span>📚</span>
+
+  <div>
+
+    <strong>
+      Learn
+    </strong>
+
+    <small>
+      Use visual math activities.
+    </small>
+
+  </div>
+
+</button>
+
+
+<button
+  class="quick-card"
+  onclick="showPage('progress')">
+
+  <span>📊</span>
+
+  <div>
+
+    <strong>
+      Progress
+    </strong>
+
+    <small>
+      See your practice history.
+    </small>
+
+  </div>
+
+</button>
+```
+
+  </div>
+
+</section>
+
+<!-- PRACTICE SETUP -->
+
+<section id="practice" class="page">
+
+  <div class="page-heading">
+
+```
+<button
+  class="back"
+  onclick="showPage('home')">
+  ← Back
+</button>
+
+<h1>
+  Practice
+</h1>
+
+<p>
+  Choose your operation and difficulty.
+</p>
+```
+
+  </div>
+
+  <div class="setup-card">
+
+```
+<label>
+  Operation
+</label>
+
+<div class="operation-buttons">
+
+  <button
+    class="operation selected"
+    data-op="addition"
+    onclick="selectOperation('addition',this)">
+    ＋ Addition
+  </button>
+
+  <button
+    class="operation"
+    data-op="subtraction"
+    onclick="selectOperation('subtraction',this)">
+    − Subtraction
+  </button>
+
+  <button
+    class="operation"
+    data-op="multiplication"
+    onclick="selectOperation('multiplication',this)">
+    × Multiplication
+  </button>
+
+  <button
+    class="operation"
+    data-op="division"
+    onclick="selectOperation('division',this)">
+    ÷ Division
+  </button>
+
+</div>
+
+
+<label>
+  Difficulty
+</label>
+
+<div class="levels">
+
+  <button
+    class="level selected"
+    onclick="selectLevel(1,this)">
+
+    <strong>
+      Level 1
+    </strong>
+
+    <small>
+      0–5
+    </small>
+
+  </button>
+
+
+  <button
+    class="level"
+    onclick="selectLevel(2,this)">
+
+    <strong>
+      Level 2
+    </strong>
+
+    <small>
+      0–10
+    </small>
+
+  </button>
+
+
+  <button
+    class="level"
+    onclick="selectLevel(3,this)">
+
+    <strong>
+      Level 3
+    </strong>
+
+    <small>
+      0–12
+    </small>
+
+  </button>
+
+
+  <button
+    class="level"
+    onclick="selectLevel(4,this)">
+
+    <strong>
+      Level 4
+    </strong>
+
+    <small>
+      0–20
+    </small>
+
+  </button>
+
+
+  <button
+    class="level"
+    onclick="selectLevel(5,this)">
+
+    <strong>
+      Level 5
+    </strong>
+
+    <small>
+      Challenge
+    </small>
+
+  </button>
+
+</div>
+
+
+<label>
+  Mode
+</label>
+
+<div class="mode-buttons">
+
+  <button
+    class="mode selected"
+    onclick="selectMode('practice',this)">
+    🧠 Practice
+  </button>
+
+  <button
+    class="mode"
+    onclick="selectMode('timed',this)">
+    ⏱ Timed
+  </button>
+
+</div>
+
+
+<button
+  class="primary start-button"
+  onclick="beginSession()">
+
+  Start Session →
+
+</button>
+```
+
+  </div>
+
+</section>
+
+<!-- GAME -->
+
+<section id="game" class="page">
+
+  <div class="game-top">
+
+```
+<button
+  class="back"
+  onclick="endSession()">
+  ← Exit
+</button>
+
+<div class="game-stat">
+
+  <small>
+    Question
+  </small>
+
+  <strong id="questionNumber">
+    1 / 20
+  </strong>
+
+</div>
+
+
+<div class="game-stat">
+
+  <small>
+    Score
+  </small>
+
+  <strong id="gameScore">
+    0
+  </strong>
+
+</div>
+
+
+<div
+  id="timerBox"
+  class="game-stat hidden">
+
+  <small>
+    Time
+  </small>
+
+  <strong id="timer">
+    60
+  </strong>
+
+</div>
+```
+
+  </div>
+
+  <div class="progress-bar">
+
+```
+<div id="questionProgress"></div>
+```
+
+  </div>
+
+  <div class="problem-card">
+
+```
+<div
+  id="operationLabel"
+  class="problem-label">
+
+  ADDITION
+
+</div>
+
+
+<div
+  id="problem"
+  class="problem">
+
+  2 + 3 = ?
+
+</div>
+
+
+<input
+  id="answer"
+  type="number"
+  inputmode="numeric"
+  autocomplete="off"
+  placeholder="?"
+  onkeydown="answerKey(event)"
+>
+
+
+<button
+  class="primary answer-button"
+  onclick="submitAnswer()">
+
+  Check Answer
+
+</button>
+
+
+<div id="feedback"></div>
+```
+
+  </div>
+
+  <div class="hint-box">
+
+```
+<strong>
+  💡 Tip
+</strong>
+
+<span id="tip">
+  Think carefully and try your best.
+</span>
+```
+
+  </div>
+
+</section>
+
+<!-- RESULTS -->
+
+<section id="results" class="page">
+
+  <div class="results-card">
+
+```
+<div class="results-icon">
+  🏆
+</div>
+
+<h1>
+  Session Complete!
+</h1>
+
+<p id="resultsMessage">
+  Great work!
+</p>
+
+
+<div class="result-grid">
+
+  <div>
+
+    <strong id="resultCorrect">
+      0
+    </strong>
+
+    <small>
+      Correct
+    </small>
+
+  </div>
+
+
+  <div>
+
+    <strong id="resultAccuracy">
+      0%
+    </strong>
+
+    <small>
+      Accuracy
+    </small>
+
+  </div>
+
+
+  <div>
+
+    <strong id="resultTime">
+      0s
+    </strong>
+
+    <small>
+      Average Time
+    </small>
+
+  </div>
+
+
+  <div>
+
+    <strong id="resultLevel">
+      1
+    </strong>
+
+    <small>
+      Level
+    </small>
+
+  </div>
+
+</div>
+
+
+<div class="results-actions">
+
+  <button
+    class="primary"
+    onclick="beginSession()">
+    Practice Again
+  </button>
+
+  <button
+    class="secondary"
+    onclick="showPage('progress')">
+    View Progress
+  </button>
+
+  <button
+    class="secondary"
+    onclick="showPage('home')">
+    Home
+  </button>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- LEARN -->
+
+<section id="learn" class="page">
+
+  <div class="page-heading">
+
+```
+<button
+  class="back"
+  onclick="showPage('home')">
+  ← Back
+</button>
+
+<h1>
+  Learn Math
+</h1>
+
+<p>
+  Use visual activities to understand your facts.
+</p>
+```
+
+  </div>
+
+  <div class="learn-grid">
+
+```
+<div class="learn-card">
+
+  <h2>
+    🔟 Ten Frame
+  </h2>
+
+  <p>
+    Ten frames help you see numbers and addition.
+  </p>
+
+  <div
+    id="tenFrame"
+    class="ten-frame">
+  </div>
+
+  <div class="learn-controls">
+
+    <button onclick="changeTenFrame(-1)">
+      −
+    </button>
+
+    <strong id="tenNumber">
+      5
+    </strong>
+
+    <button onclick="changeTenFrame(1)">
+      +
+    </button>
+
+  </div>
+
+</div>
+
+
+<div class="learn-card">
+
+  <h2>
+    🔴 Counting Beads
+  </h2>
+
+  <p>
+    Use beads to visualize counting.
+  </p>
+
+  <div
+    id="beads"
+    class="beads">
+  </div>
+
+  <div class="learn-controls">
+
+    <button onclick="changeBeads(-1)">
+      −
+    </button>
+
+    <strong id="beadNumber">
+      5
+    </strong>
+
+    <button onclick="changeBeads(1)">
+      +
+    </button>
+
+  </div>
+
+</div>
+
+
+<div class="learn-card">
+
+  <h2>
+    ➕ Addition
+  </h2>
+
+  <p>
+    Break numbers into smaller groups.
+  </p>
+
+  <div class="example-equation">
+    4 + 3 = <strong>7</strong>
+  </div>
+
+  <p>
+    Start with 4, then count three more:
+    5 → 6 → 7.
+  </p>
+
+</div>
+
+
+<div class="learn-card">
+
+  <h2>
+    ➖ Subtraction
+  </h2>
+
+  <p>
+    Think about taking away.
+  </p>
+
+  <div class="example-equation">
+    8 − 3 = <strong>5</strong>
+  </div>
+
+  <p>
+    Start at 8 and count backwards three times.
+  </p>
+
+</div>
+```
+
+  </div>
+
+</section>
+
+<!-- PROGRESS -->
+
+<section id="progress" class="page">
+
+  <div class="page-heading">
+
+```
+<button
+  class="back"
+  onclick="showPage('home')">
+  ← Back
+</button>
+
+<h1>
+  Your Progress
+</h1>
+
+<p>
+  Track your math fact journey.
+</p>
+```
+
+  </div>
+
+  <div class="progress-overview">
+
+```
+<div class="progress-card">
+
+  <span>🎯</span>
+
+  <strong id="totalCorrect">
+    0
+  </strong>
+
+  <small>
+    Correct Answers
+  </small>
+
+</div>
+
+
+<div class="progress-card">
+
+  <span>🔥</span>
+
+  <strong id="totalSessions">
+    0
+  </strong>
+
+  <small>
+    Sessions
+  </small>
+
+</div>
+
+
+<div class="progress-card">
+
+  <span>⭐</span>
+
+  <strong id="currentLevel">
+    1
+  </strong>
+
+  <small>
+    Current Level
+  </small>
+
+</div>
+
+
+<div class="progress-card">
+
+  <span>⚡</span>
+
+  <strong id="bestAccuracy">
+    0%
+  </strong>
+
+  <small>
+    Best Accuracy
+  </small>
+
+</div>
+```
+
+  </div>
+
+  <div class="mastery-card">
+
+```
+<h2>
+  Fact Mastery
+</h2>
+
+
+<div class="mastery-row">
+
+  <span>
+    ＋ Addition
+  </span>
+
+  <div class="mastery-track">
+    <div id="additionMastery"></div>
+  </div>
+
+  <strong id="additionPercent">
+    0%
+  </strong>
+
+</div>
+
+
+<div class="mastery-row">
+
+  <span>
+    − Subtraction
+  </span>
+
+  <div class="mastery-track">
+    <div id="subtractionMastery"></div>
+  </div>
+
+  <strong id="subtractionPercent">
+    0%
+  </strong>
+
+</div>
+
+
+<div class="mastery-row">
+
+  <span>
+    × Multiplication
+  </span>
+
+  <div class="mastery-track">
+    <div id="multiplicationMastery"></div>
+  </div>
+
+  <strong id="multiplicationPercent">
+    0%
+  </strong>
+
+</div>
+
+
+<div class="mastery-row">
+
+  <span>
+    ÷ Division
+  </span>
+
+  <div class="mastery-track">
+    <div id="divisionMastery"></div>
+  </div>
+
+  <strong id="divisionPercent">
+    0%
+  </strong>
+
+</div>
+```
+
+  </div>
+
+<button
+ class="danger"
+ onclick="resetProgress()">
+
+```
+Reset Progress
+```
+
+  </button>
+
+</section>
+
+<!-- SETTINGS -->
+
+<section id="settings" class="page">
+
+  <div class="page-heading">
+
+```
+<button
+  class="back"
+  onclick="showPage('home')">
+  ← Back
+</button>
+
+<h1>
+  Settings
+</h1>
+
+<p>
+  Customize Math Facts Lab.
+</p>
+```
+
+  </div>
+
+  <div class="settings-card">
+
+```
+<div class="setting">
+
+  <div>
+
+    <strong>
+      Dark Mode
+    </strong>
+
+    <small>
+      Use a darker interface.
+    </small>
+
+  </div>
+
+  <button
+    id="themeButton"
+    class="toggle"
+    onclick="toggleTheme()">
+    OFF
+  </button>
+
+</div>
+
+
+<div class="setting">
+
+  <div>
+
+    <strong>
+      Sound
+    </strong>
+
+    <small>
+      Play feedback sounds.
+    </small>
+
+  </div>
+
+  <button
+    id="soundButton"
+    class="toggle on"
+    onclick="toggleSound()">
+    ON
+  </button>
+
+</div>
+
+
+<div class="setting">
+
+  <div>
+
+    <strong>
+      Questions Per Session
+    </strong>
+
+    <small>
+      Choose your practice length.
+    </small>
+
+  </div>
+
+  <select
+    id="questionCount"
+    onchange="saveSettings()">
+
+    <option value="10">
+      10
+    </option>
+
+    <option value="20" selected>
+      20
+    </option>
+
+    <option value="30">
+      30
+    </option>
+
+    <option value="50">
+      50
+    </option>
+
+  </select>
+
+</div>
+```
+
+  </div>
+
+  <div class="about-card">
+
+```
+<h2>
+  About Math Facts Lab
+</h2>
+
+<p>
+  Math Facts Lab is an original browser-based
+  math practice application designed for learning
+  and practicing math facts.
+</p>
+
+<p>
+  Your progress is stored locally on this device.
+</p>
+```
+
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+
+  <span>
+    Math Facts Lab
+  </span>
+
+  <span>
+    V1.0
+  </span>
+
+</footer>
+
+</div>
+
+<script>
+
+/* ================================
+   MATH FACTS LAB
+   ALL JAVASCRIPT IN INDEX.HTML
+================================ */
+
+
+let operation = "addition";
+let level = 1;
+let mode = "practice";
+
+let questionIndex = 0;
+let totalQuestions = 20;
+let correctAnswers = 0;
+
+let sessionStart = 0;
+let questionStart = 0;
+
+let currentAnswer = 0;
+
+let timerValue = 60;
+let timerInterval = null;
+
+let tenNumber = 5;
+let beadNumber = 5;
+
+let soundEnabled = true;
+
+
+const defaultProgress = {
+  totalCorrect:0,
+  totalSessions:0,
+  bestAccuracy:0,
+  level:1,
+  addition:0,
+  subtraction:0,
+  multiplication:0,
+  division:0
+};
+
+
+let progressData =
+  JSON.parse(
+    localStorage.getItem("mathFactsProgress")
+  ) || {...defaultProgress};
+
+
+/* PAGE NAVIGATION */
+
+function showPage(page) {
+
+  document.querySelectorAll(".page")
+    .forEach(function(section) {
+
+      section.classList.remove("active");
+
+    });
+
+
+  const target =
+    document.getElementById(page);
+
+
+  if (target) {
+    target.classList.add("active");
+  }
+
+
+  window.scrollTo(0,0);
+
+
+  if (page === "progress") {
+    updateProgressPage();
+  }
+
+
+  if (page === "learn") {
+    drawTenFrame();
+    drawBeads();
+  }
+
+}
+
+
+/* OPERATION */
+
+function selectOperation(value,button) {
+
+  operation = value;
+
+
+  document.querySelectorAll(".operation")
+    .forEach(function(btn) {
+
+      btn.classList.remove("selected");
+
+    });
+
+
+  button.classList.add("selected");
+
+}
+
+
+/* LEVEL */
+
+function selectLevel(value,button) {
+
+  level = value;
+
+
+  document.querySelectorAll(".level")
+    .forEach(function(btn) {
+
+      btn.classList.remove("selected");
+
+    });
+
+
+  button.classList.add("selected");
+
+}
+
+
+/* MODE */
+
+function selectMode(value,button) {
+
+  mode = value;
+
+
+  document.querySelectorAll(".mode")
+    .forEach(function(btn) {
+
+      btn.classList.remove("selected");
+
+    });
+
+
+  button.classList.add("selected");
+
+}
+
+
+/* QUICK PRACTICE */
+
+function startPractice(type) {
+
+  operation = type;
+
+  showPage("practice");
+
+
+  document.querySelectorAll(".operation")
+    .forEach(function(btn) {
+
+      btn.classList.remove("selected");
+
+
+      if (btn.dataset.op === type) {
+        btn.classList.add("selected");
+      }
+
+    });
+
+}
+
+
+/* START SESSION */
+
+function beginSession() {
+
+  totalQuestions =
+    Number(
+      localStorage.getItem("questionCount")
+    ) || 20;
+
+
+  questionIndex = 0;
+  correctAnswers = 0;
+
+
+  sessionStart = Date.now();
+  questionStart = Date.now();
+
+
+  clearInterval(timerInterval);
+
+
+  if (mode === "timed") {
+
+    timerValue = 60;
+
+
+    document.getElementById("timerBox")
+      .classList.remove("hidden");
+
+
+    document.getElementById("timer")
+      .textContent = timerValue;
+
+
+    timerInterval =
+      setInterval(function() {
+
+        timerValue--;
+
+        document.getElementById("timer")
+          .textContent = timerValue;
+
+
+        if (timerValue <= 0) {
+          finishSession();
+        }
+
+      },1000);
+
+  } else {
+
+    document.getElementById("timerBox")
+      .classList.add("hidden");
+
+  }
+
+
+  showPage("game");
+
+  generateQuestion();
+
+}
+
+
+/* NUMBER RANGE */
+
+function getMaxNumber() {
+
+  if (level === 1) return 5;
+
+  if (level === 2) return 10;
+
+  if (level === 3) return 12;
+
+  if (level === 4) return 20;
+
+  return 30;
+
+}
+
+
+/* RANDOM NUMBER */
+
+function randomNumber(max) {
+
+  return Math.floor(
+    Math.random() * (max + 1)
+  );
+
+}
+
+
+/* GENERATE QUESTION */
+
+function generateQuestion() {
+
+  if (questionIndex >= totalQuestions) {
+
+    finishSession();
+
+    return;
+
+  }
+
+
+  const max =
+    getMaxNumber();
+
+
+  let a =
+    randomNumber(max);
+
+  let b =
+    randomNumber(max);
+
+
+  if (operation === "addition") {
+
+    currentAnswer =
+      a + b;
+
+
+    document.getElementById("problem")
+      .textContent =
+      a + " + " + b + " = ?";
+
+
+    document.getElementById("operationLabel")
+      .textContent =
+      "ADDITION";
+
+  }
+
+
+  if (operation === "subtraction") {
+
+    if (b > a) {
+
+      const temp = a;
+
+      a = b;
+      b = temp;
+
+    }
+
+
+    currentAnswer =
+      a - b;
+
+
+    document.getElementById("problem")
+      .textContent =
+      a + " − " + b + " = ?";
+
+
+    document.getElementById("operationLabel")
+      .textContent =
+      "SUBTRACTION";
+
+  }
+
+
+  if (operation === "multiplication") {
+
+    currentAnswer =
+      a * b;
+
+
+    document.getElementById("problem")
+      .textContent =
+      a + " × " + b + " = ?";
+
+
+    document.getElementById("operationLabel")
+      .textContent =
+      "MULTIPLICATION";
+
+  }
+
+
+  if (operation === "division") {
+
+    b =
+      Math.max(1,b);
+
+
+    const dividend =
+      a * b;
+
+
+    currentAnswer =
+      dividend / b;
+
+
+    document.getElementById("problem")
+      .textContent =
+      dividend + " ÷ " + b + " = ?";
+
+
+    document.getElementById("operationLabel")
+      .textContent =
+      "DIVISION";
+
+  }
+
+
+  document.getElementById("questionNumber")
+    .textContent =
+    (questionIndex + 1)
+    + " / "
+    + totalQuestions;
+
+
+  document.getElementById("gameScore")
+    .textContent =
+    correctAnswers;
+
+
+  document.getElementById("questionProgress")
+    .style.width =
+    ((questionIndex / totalQuestions) * 100)
+    + "%";
+
+
+  document.getElementById("answer")
+    .value = "";
+
+
+  document.getElementById("feedback")
+    .textContent = "";
+
+
+  document.getElementById("feedback")
+    .className = "";
+
+
+  questionStart =
+    Date.now();
+
+
+  document.getElementById("answer")
+    .focus();
+
+}
+
+
+/* ENTER KEY */
+
+function answerKey(event) {
+
+  if (event.key === "Enter") {
+    submitAnswer();
+  }
+
+}
+
+
+/* SUBMIT */
+
+function submitAnswer() {
+
+  const input =
+    document.getElementById("answer");
+
+
+  if (input.value.trim() === "") {
+    return;
+  }
+
+
+  const answer =
+    Number(input.value);
+
+
+  const feedback =
+    document.getElementById("feedback");
+
+
+  if (answer === currentAnswer) {
+
+    correctAnswers++;
+
+
+    feedback.textContent =
+      "✓ Correct!";
+
+
+    feedback.className =
+      "correct";
+
+
+    playBeep(true);
+
+  } else {
+
+    feedback.textContent =
+      "Not quite. The answer is "
+      + currentAnswer
+      + ".";
+
+
+    feedback.className =
+      "wrong";
+
+
+    playBeep(false);
+
+  }
+
+
+  document.getElementById("gameScore")
+    .textContent =
+    correctAnswers;
+
+
+  questionIndex++;
+
+
+  setTimeout(function() {
+
+    generateQuestion();
+
+  },650);
+
+}
+
+
+/* FINISH */
+
+function finishSession() {
+
+  clearInterval(timerInterval);
+
+
+  const elapsed =
+    (Date.now() - sessionStart) / 1000;
+
+
+  const accuracy =
+    totalQuestions === 0
+      ? 0
+      : Math.round(
+          (correctAnswers / totalQuestions) * 100
+        );
+
+
+  const averageTime =
+    totalQuestions === 0
+      ? 0
+      : (elapsed / totalQuestions)
+        .toFixed(1);
+
+
+  progressData.totalCorrect +=
+    correctAnswers;
+
+
+  progressData.totalSessions++;
+
+
+  if (accuracy > progressData.bestAccuracy) {
+
+    progressData.bestAccuracy =
+      accuracy;
+
+  }
+
+
+  progressData[operation] =
+    Math.min(
+      100,
+      progressData[operation]
+      + Math.round(accuracy / 10)
+    );
+
+
+  if (
+    accuracy >= 85 &&
+    progressData.level < 5
+  ) {
+
+    progressData.level++;
+
+  }
+
+
+  saveProgress();
+
+
+  document.getElementById("resultCorrect")
+    .textContent =
+    correctAnswers;
+
+
+  document.getElementById("resultAccuracy")
+    .textContent =
+    accuracy + "%";
+
+
+  document.getElementById("resultTime")
+    .textContent =
+    averageTime + "s";
+
+
+  document.getElementById("resultLevel")
+    .textContent =
+    progressData.level;
+
+
+  if (accuracy >= 90) {
+
+    document.getElementById("resultsMessage")
+      .textContent =
+      "Excellent work! You are building strong fact fluency.";
+
+  } else if (accuracy >= 70) {
+
+    document.getElementById("resultsMessage")
+      .textContent =
+      "Nice job! Keep practicing to become even more fluent.";
+
+  } else {
+
+    document.getElementById("resultsMessage")
+      .textContent =
+      "Good practice! Keep working on these facts.";
+
+  }
+
+
+  showPage("results");
+
+}
+
+
+/* EXIT */
+
+function endSession() {
+
+  clearInterval(timerInterval);
+
+
+  if (
+    confirm(
+      "Exit this practice session?"
+    )
+  ) {
+
+    showPage("home");
+
+  }
+
+}
+
+
+/* SAVE */
+
+function saveProgress() {
+
+  localStorage.setItem(
+    "mathFactsProgress",
+    JSON.stringify(progressData)
+  );
+
+}
+
+
+/* PROGRESS */
+
+function updateProgressPage() {
+
+  document.getElementById("totalCorrect")
+    .textContent =
+    progressData.totalCorrect;
+
+
+  document.getElementById("totalSessions")
+    .textContent =
+    progressData.totalSessions;
+
+
+  document.getElementById("currentLevel")
+    .textContent =
+    progressData.level;
+
+
+  document.getElementById("bestAccuracy")
+    .textContent =
+    progressData.bestAccuracy + "%";
+
+
+  updateMastery(
+    "addition",
+    progressData.addition
+  );
+
+
+  updateMastery(
+    "subtraction",
+    progressData.subtraction
+  );
+
+
+  updateMastery(
+    "multiplication",
+    progressData.multiplication
+  );
+
+
+  updateMastery(
+    "division",
+    progressData.division
+  );
+
+}
+
+
+/* MASTERY */
+
+function updateMastery(name,value) {
+
+  document.getElementById(name + "Mastery")
+    .style.width =
+    value + "%";
+
+
+  document.getElementById(name + "Percent")
+    .textContent =
+    value + "%";
+
+}
+
+
+/* RESET */
+
+function resetProgress() {
+
+  if (
+    confirm(
+      "Reset all Math Facts Lab progress?"
+    )
+  ) {
+
+    progressData =
+      {...defaultProgress};
+
+
+    saveProgress();
+
+    updateProgressPage();
+
+  }
+
+}
+
+
+/* DARK MODE */
+
+function toggleTheme() {
+
+  document.body.classList.toggle("dark");
+
+
+  const dark =
+    document.body.classList.contains("dark");
+
+
+  localStorage.setItem(
+    "mathFactsDark",
+    dark ? "yes" : "no"
+  );
+
+
+  document.getElementById("themeButton")
+    .textContent =
+    dark ? "ON" : "OFF";
+
+}
+
+
+/* SOUND */
+
+function toggleSound() {
+
+  soundEnabled =
+    !soundEnabled;
+
+
+  document.getElementById("soundButton")
+    .textContent =
+    soundEnabled ? "ON" : "OFF";
+
+
+  document.getElementById("soundButton")
+    .classList.toggle(
+      "on",
+      soundEnabled
+    );
+
+
+  localStorage.setItem(
+    "mathFactsSound",
+    soundEnabled ? "yes" : "no"
+  );
+
+}
+
+
+/* SETTINGS */
+
+function saveSettings() {
+
+  const count =
+    document.getElementById("questionCount")
+      .value;
+
+
+  localStorage.setItem(
+    "questionCount",
+    count
+  );
+
+}
+
+
+/* LOAD SETTINGS */
+
+function loadSettings() {
+
+  const dark =
+    localStorage.getItem(
+      "mathFactsDark"
+    ) === "yes";
+
+
+  if (dark) {
+
+    document.body.classList.add("dark");
+
+
+    document.getElementById("themeButton")
+      .textContent =
+      "ON";
+
+  }
+
+
+  soundEnabled =
+    localStorage.getItem(
+      "mathFactsSound"
+    ) !== "no";
+
+
+  document.getElementById("soundButton")
+    .textContent =
+    soundEnabled ? "ON" : "OFF";
+
+
+  document.getElementById("soundButton")
+    .classList.toggle(
+      "on",
+      soundEnabled
+    );
+
+
+  const count =
+    localStorage.getItem(
+      "questionCount"
+    );
+
+
+  if (count) {
+
+    document.getElementById("questionCount")
+      .value =
+      count;
+
+  }
+
+}
+
+
+/* AUDIO */
+
+function playBeep(correct) {
+
+  if (!soundEnabled) return;
+
+
+  try {
+
+    const AudioContext =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+
+    const audio =
+      new AudioContext();
+
+
+    const oscillator =
+      audio.createOscillator();
+
+
+    const gain =
+      audio.createGain();
+
+
+    oscillator.connect(gain);
+
+    gain.connect(audio.destination);
+
+
+    oscillator.frequency.value =
+      correct ? 700 : 250;
+
+
+    gain.gain.value =
+      0.05;
+
+
+    oscillator.start();
+
+
+    oscillator.stop(
+      audio.currentTime + 0.12
+    );
+
+  } catch(error) {
+
+    console.log(
+      "Audio unavailable."
+    );
+
+  }
+
+}
+
+
+/* TEN FRAME */
+
+function changeTenFrame(amount) {
+
+  tenNumber += amount;
+
+
+  if (tenNumber < 0)
+    tenNumber = 0;
+
+
+  if (tenNumber > 10)
+    tenNumber = 10;
+
+
+  drawTenFrame();
+
+}
+
+
+function drawTenFrame() {
+
+  const frame =
+    document.getElementById(
+      "tenFrame"
+    );
+
+
+  if (!frame) return;
+
+
+  frame.innerHTML = "";
+
+
+  for (
+    let i = 0;
+    i < 10;
+    i++
+  ) {
+
+    const cell =
+      document.createElement(
+        "div"
+      );
+
+
+    cell.className =
+      "ten-cell";
+
+
+    if (i < tenNumber) {
+
+      cell.classList.add(
+        "filled"
+      );
+
+    }
+
+
+    frame.appendChild(cell);
+
+  }
+
+
+  document.getElementById("tenNumber")
+    .textContent =
+    tenNumber;
+
+}
+
+
+/* BEADS */
+
+function changeBeads(amount) {
+
+  beadNumber += amount;
+
+
+  if (beadNumber < 0)
+    beadNumber = 0;
+
+
+  if (beadNumber > 30)
+    beadNumber = 30;
+
+
+  drawBeads();
+
+}
+
+
+function drawBeads() {
+
+  const container =
+    document.getElementById(
+      "beads"
+    );
+
+
+  if (!container) return;
+
+
+  container.innerHTML = "";
+
+
+  for (
+    let i = 0;
+    i < beadNumber;
+    i++
+  ) {
+
+    const bead =
+      document.createElement(
+        "div"
+      );
+
+
+    bead.className =
+      "bead";
+
+
+    container.appendChild(
+      bead
+    );
+
+  }
+
+
+  document.getElementById("beadNumber")
+    .textContent =
+    beadNumber;
+
+}
+
+
+/* STARTUP */
+
+window.addEventListener(
+  "load",
+  function() {
+
+    loadSettings();
+
+    drawTenFrame();
+
+    drawBeads();
+
+
+    if (
+      "serviceWorker" in navigator
+    ) {
+
+      navigator.serviceWorker
+        .register("sw.js")
+        .then(function() {
+
+          console.log(
+            "Math Facts Lab PWA ready."
+          );
+
+        })
+        .catch(function(error) {
+
+          console.log(
+            "Service worker error:",
+            error
+          );
+
+        });
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
